@@ -60,9 +60,10 @@ public class Main {
         }
 
         List<Set<Integer>> groupList = new ArrayList<>(groups.values());
-        int answer = writeGroupsToFile("groups.txt", groupList);
+        int numberOfGroups = (int) groupList.stream().filter(a -> a.size() > 1).count();
+        writeGroupsToFile("groups.txt", numberOfGroups, groupList);
         double executionTimeSeconds = (System.currentTimeMillis() - startingTime) / 1000.0;
-        System.out.println("number of components: " + answer);
+        System.out.println("number of components: " + numberOfGroups);
         System.out.println("runtime: " + executionTimeSeconds + " s");
     }
 
@@ -84,10 +85,11 @@ public class Main {
         return lines.stream().toList();
     }
 
-    private static int writeGroupsToFile(String filename, List<Set<Integer>> groups) {
+    private static void writeGroupsToFile(String filename, int numberOfGroups, List<Set<Integer>> groups) {
         groups.sort((a, b) -> b.size() - a.size());
         int groupCount = 0;
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+            bw.write("" + numberOfGroups + '\n');
             for (Set<Integer> group : groups) {
                 if (group.size() <= 1) {
                     continue;
@@ -102,11 +104,9 @@ public class Main {
                     }
                 }
                 bw.newLine();
-
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return groupCount;
     }
 }
