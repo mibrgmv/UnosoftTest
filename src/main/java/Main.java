@@ -73,7 +73,7 @@ public class Main {
             BufferedReader br = new BufferedReader(new FileReader(filename));
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.matches("(\"\\d*\";)*(\"\\d*\")$")) {
+                if (line.matches("^[(\"\\d*.?\\d*\";)\\w]*[(\"\\d*.?\\d*\";)\\w]$")) {
                     List<String> linesList = Arrays.stream(line.split(";")).toList();
                     lines.add(linesList);
                     maxLineLength = Math.max(maxLineLength, linesList.size());
