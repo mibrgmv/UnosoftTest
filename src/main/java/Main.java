@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         long startingTime = System.currentTimeMillis();
-        lines = readLinesFromFile("lng.txt");
+        lines = readLinesFromFile(args[0]);
         int n = lines.size();
         int currentComponent = 1;
 
